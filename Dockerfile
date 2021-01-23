@@ -22,8 +22,10 @@ RUN tor --verify-config \
  && sleep 91            \
  && xbps-install -S
 
+# TODO [CircleCI] Directory /var/lib/torcannot be read: Permission denied
 FROM scratch as squash
 COPY --from=droidlinux / /
+RUN chown -R tor:tor /var/lib/tor
 SHELL ["/usr/bin/bash", "-l", "-c"]
 ARG TEST
 
