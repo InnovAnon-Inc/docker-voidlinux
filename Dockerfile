@@ -18,7 +18,6 @@ COPY                 ./etc/xbps.d/                   /etc/xbps.d/
 COPY                 ./usr/local/bin/support-wrapper /usr/local/bin/
 SHELL ["/usr/bin/bash", "-l", "-c"]
 ARG TEST
-ENV TEST=$TEST
 RUN tor --verify-config \
  && sleep 91            \
  && xbps-install -S
@@ -27,11 +26,9 @@ FROM scratch as squash
 COPY --from=droidlinux / /
 SHELL ["/usr/bin/bash", "-l", "-c"]
 ARG TEST
-ENV TEST=$TEST
 
 FROM squash as test
 ARG TEST
-ENV TEST=$TEST
 RUN tor --verify-config \
  && sleep 127           \
  && xbps-install -S     \
