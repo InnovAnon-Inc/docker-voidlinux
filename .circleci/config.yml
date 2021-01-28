@@ -48,15 +48,15 @@ jobs:
               docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD
               docker push innovanon/voidlinux
             fi
-#      - run:
-#          name: Push upstream (pusher)
-#          command: |
-#            if [ "${CIRCLE_BRANCH}" == "master" ]; then
-#              curl --location --request POST \
-#                'https://circleci.com/api/v2/project/github/InnovAnon-Inc/pusher/pipeline' \
-#                --header 'Content-Type: application/json' \
-#                -u "${API_TOKEN}:"
-#            fi
+      - run:
+          name: Push upstream (void-fdo)
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              curl --location --request POST \
+                'https://circleci.com/api/v2/project/github/InnovAnon-Inc/void-fdo/pipeline' \
+                --header 'Content-Type: application/json' \
+                -u "${API_TOKEN}:"
+            fi
       - slack/notify:
           event: fail
           mentions: '@InnovAnon-Inc'
