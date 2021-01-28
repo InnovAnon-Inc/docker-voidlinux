@@ -49,11 +49,11 @@ jobs:
               docker push innovanon/voidlinux
             fi
       - run:
-          name: Push upstream (void-fdo)
+          name: Push upstream (void-base)
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               curl --location --request POST \
-                'https://circleci.com/api/v2/project/github/InnovAnon-Inc/void-fdo/pipeline' \
+                'https://circleci.com/api/v2/project/github/InnovAnon-Inc/void-base/pipeline' \
                 --header 'Content-Type: application/json' \
                 -u "${API_TOKEN}:"
             fi
