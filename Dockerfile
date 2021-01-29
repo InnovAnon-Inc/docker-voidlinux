@@ -1,6 +1,6 @@
 FROM innovanon/builder as bootstrap
 RUN sleep 91                                                                                                 \
- && curl -L --proxy $SOCKS_PROXY                     -o void-x86_64-musl-ROOTFS-20191109.tar.xz              \
+ && curl -L --proxy $SOCKS_PROXY --retry 11          -o void-x86_64-musl-ROOTFS-20191109.tar.xz              \
        https://alpha.de.repo.voidlinux.org/live/current/void-x86_64-musl-ROOTFS-20191109.tar.xz              \
  && tar xf                                              void-x86_64-musl-ROOTFS-20191109.tar.xz -C /tmp/
 
@@ -11,8 +11,7 @@ FROM voidlinux as droidlinux
 COPY --from=bootstrap /etc/profile.d/support.sh      /etc/profile.d/
 COPY --from=bootstrap /etc/sysctl.conf               /etc/sysctl.conf
 COPY --from=bootstrap /usr/local/bin/support         /usr/local/bin/
-RUN xbps-install  -uy xbps \
- && xbps-install -Suy      \
+RUN xbps-install -Suy -R https://alpha.us.repo.voidlinux.org/current \
  && xbps-install   -y tor
 COPY                 ./etc/profile.d/socksproxy.sh   /etc/profile.d/
 COPY                 ./etc/xbps.d/                   /etc/xbps.d/
